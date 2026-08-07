@@ -27,8 +27,12 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm ci
+      - name: Lint project
+        run: npm run lint
+      - name: Type check project
+        run: npm run type-check
       - name: Build project
-        run: npm run build
+        run: npm run build-only
       - name: Upload artifact for deployment job
         id: deployment
         uses: actions/upload-pages-artifact@v3
