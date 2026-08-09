@@ -1,35 +1,74 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import viteLogo from '../assets/vite.svg'
-import heroImg from '../assets/hero.png'
 import vueLogo from '../assets/vue.svg'
 
-const count = ref(0)
+import { useStopwatch } from '../composables/useStopwatch'
+
+const { formattedTime, isRunning, start, pause, restore, skip, pomodoroCount, baseUrl } =
+  useStopwatch()
 </script>
 
 <template>
-  <section id="center">
+  <main id="center">
     <div class="hero">
-      <img :src="heroImg" class="base" width="170" height="179" alt="" />
-      <img :src="vueLogo" class="framework" alt="Vue logo" />
-      <img :src="viteLogo" class="vite" alt="Vite logo" />
+      <div class="intervals">
+        <button type="button" class="intervals__button">Pomodoro</button>
+        <button type="button" class="intervals__button">Short Break</button>
+        <button type="button" class="intervals__button">Long Break</button>
+      </div>
+      <div class="display">
+        {{ formattedTime }}
+      </div>
+      <div class="controls">
+        <button type="button" @click="restore" class="controls__button" :hidden="!isRunning">
+          <svg class="controls__icon" role="presentation" aria-hidden="true">
+            <use :href="`${baseUrl}icons.svg#mdi-restore`"></use>
+          </svg>
+          <span class="visually-hidden">Restore</span>
+        </button>
+        <button
+          type="button"
+          @click="start"
+          class="controls__button--featured"
+          :disabled="isRunning"
+          :hidden="isRunning"
+        >
+          START
+        </button>
+        <button
+          type="button"
+          @click="pause"
+          class="controls__button--featured"
+          :disabled="!isRunning"
+          :hidden="!isRunning"
+        >
+          PAUSE
+        </button>
+        <button type="button" @click="skip" class="controls__button" :hidden="!isRunning">
+          <svg class="controls__icon" role="presentation" aria-hidden="true">
+            <use :href="`${baseUrl}icons.svg#mdi-skip-next`"></use>
+          </svg>
+          <span class="visually-hidden">Skip</span>
+        </button>
+      </div>
     </div>
     <div>
-      <h1>Get started</h1>
-      <p>Edit <code>src/App.vue</code> and save to test <code>HMR</code></p>
+      <p>
+        <code>#{{ pomodoroCount }}</code>
+      </p>
+      <p>Do it!</p>
     </div>
-    <button type="button" class="counter" @click="count++">Count is {{ count }}</button>
-  </section>
+  </main>
 
   <div class="ticks"></div>
 
   <section id="next-steps">
     <div id="docs">
       <svg class="icon" role="presentation" aria-hidden="true">
-        <use href="/icons.svg#documentation-icon"></use>
+        <use :href="`${baseUrl}icons.svg#documentation-icon`"></use>
       </svg>
-      <h2>Documentation</h2>
-      <p>Your questions, answered</p>
+      <h2>Solanum Lycopersicum</h2>
+      <p>Your pomodoro timer without ads</p>
       <ul>
         <li>
           <a href="https://vite.dev/" target="_blank">
@@ -47,41 +86,17 @@ const count = ref(0)
     </div>
     <div id="social">
       <svg class="icon" role="presentation" aria-hidden="true">
-        <use href="/icons.svg#social-icon"></use>
+        <use :href="`${baseUrl}icons.svg#social-icon`"></use>
       </svg>
       <h2>Connect with us</h2>
-      <p>Join the Vite community</p>
+      <p>Join the Solanum Lycopersicum community</p>
       <ul>
         <li>
           <a href="https://github.com/vitejs/vite" target="_blank">
             <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#github-icon"></use>
+              <use :href="`${baseUrl}icons.svg#github-icon`"></use>
             </svg>
             GitHub
-          </a>
-        </li>
-        <li>
-          <a href="https://chat.vite.dev/" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#discord-icon"></use>
-            </svg>
-            Discord
-          </a>
-        </li>
-        <li>
-          <a href="https://x.com/vite_js" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#x-icon"></use>
-            </svg>
-            X.com
-          </a>
-        </li>
-        <li>
-          <a href="https://bsky.app/profile/vite.dev" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#bluesky-icon"></use>
-            </svg>
-            Bluesky
           </a>
         </li>
       </ul>
