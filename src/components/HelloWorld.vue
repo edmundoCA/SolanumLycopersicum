@@ -4,11 +4,21 @@ import vueLogo from '../assets/vue.svg'
 
 import { useStopwatch } from '../composables/useStopwatch'
 
-const { formattedTime, isRunning, start, pause, restore, skip, pomodoroCount, baseUrl } =
-  useStopwatch()
+const {
+  formattedTime,
+  isRunning,
+  start,
+  pause,
+  restore,
+  skip,
+  pomodoroCount,
+  baseUrl,
+  isPlayerReady
+} = useStopwatch()
 </script>
 
 <template>
+  <div id="player" class="visually-hidden"></div>
   <main id="center">
     <div class="hero">
       <div class="intervals">
@@ -30,10 +40,10 @@ const { formattedTime, isRunning, start, pause, restore, skip, pomodoroCount, ba
           type="button"
           @click="start"
           class="controls__button--featured"
-          :disabled="isRunning"
+          :disabled="!isPlayerReady"
           :hidden="isRunning"
         >
-          START
+          {{ isPlayerReady ? 'START' : 'LOADING...' }}
         </button>
         <button
           type="button"

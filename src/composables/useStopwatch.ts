@@ -1,6 +1,7 @@
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted, onMounted } from 'vue'
 
 export function useStopwatch() {
+  const player = ref<YtPlayer | null>(null)
   const baseUrl = import.meta.env.BASE_URL
   const minutesToMilliseconds = (minutes: number) => minutes * 60 * 1000
   const stages = {
@@ -21,6 +22,7 @@ export function useStopwatch() {
   ]
   const sequenceIndex = ref(0)
   const isRunning = ref(false)
+  const isPlayerReady = ref(false)
   const pomodoroCount = computed(() => Math.floor(stageCount.value / 2) + 1)
   const remainingTime = ref(stages.pomodoro)
   const elapsedTime = ref(0)
@@ -31,6 +33,7 @@ export function useStopwatch() {
 
   const start = () => {
     if (isRunning.value) return
+    playvideo()
 
     isRunning.value = true
     startTime = Date.now() - elapsedTime.value
@@ -47,6 +50,7 @@ export function useStopwatch() {
 
   const pause = () => {
     if (!isRunning.value) return
+    stopVideo()
 
     isRunning.value = false
     if (timerInterval) clearInterval(timerInterval)
@@ -67,7 +71,33 @@ export function useStopwatch() {
     if (timerInterval) clearInterval(timerInterval)
   })
 
+  onMounted(() => {
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    if (firstScriptTag.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    }
+    window.onYouTubeIframeAPIReady = () => {
+      player.value = new window.YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: 'M7lc1UVf-VE',
+        playerVars: {
+          playsinline: 1
+        },
+        events: {
+          onReady: onPlayerReady
+        }
+      })
+    }
+    function onPlayerReady() {
+      isPlayerReady.value = true
+    }
+  })
+
   return {
+    isPlayerReady,
     isRunning,
     formattedTime,
     start,
@@ -87,5 +117,15 @@ export function useStopwatch() {
     elapsedTime.value = 0
     startTime = Date.now()
     remainingTime.value = stages[sequence[sequenceIndex.value]]
+  }
+  function playvideo() {
+    if (player.value) {
+      player.value.playVideo()
+    }
+  }
+  function stopVideo() {
+    if (player.value) {
+      player.value.pauseVideo()
+    }
   }
 }
