@@ -50,7 +50,7 @@ export function useStopwatch() {
 
   const pause = () => {
     if (!isRunning.value) return
-    stopVideo()
+    pauseVideo()
 
     isRunning.value = false
     if (timerInterval) clearInterval(timerInterval)
@@ -82,9 +82,10 @@ export function useStopwatch() {
       player.value = new window.YT.Player('player', {
         height: '390',
         width: '640',
-        videoId: 'M7lc1UVf-VE',
         playerVars: {
-          playsinline: 1
+          playsinline: 1,
+          listType: 'playlist',
+          list: 'PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L'
         },
         events: {
           onReady: onPlayerReady
@@ -123,7 +124,7 @@ export function useStopwatch() {
       player.value.playVideo()
     }
   }
-  function stopVideo() {
+  function pauseVideo() {
     if (player.value) {
       player.value.pauseVideo()
     }
