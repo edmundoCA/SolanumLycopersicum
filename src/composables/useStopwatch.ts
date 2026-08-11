@@ -114,6 +114,11 @@ export function useStopwatch() {
 
   function skip() {
     sequenceIndex.value = ++stageCount.value % sequence.length
+    if (currentStage.value === 'pomodoro') {
+      playvideo()
+    } else {
+      pauseVideo()
+    }
     restore()
   }
 
