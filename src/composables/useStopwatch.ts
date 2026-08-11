@@ -108,6 +108,7 @@ export function useStopwatch() {
     skip,
     baseUrl,
     currentStage,
+    switchToPomodoro,
     pomodoroCount
   }
 
@@ -130,5 +131,10 @@ export function useStopwatch() {
     if (player.value) {
       player.value.pauseVideo()
     }
+  }
+
+  function switchToPomodoro() {
+    if (currentStage.value === 'pomodoro') return
+    skip()
   }
 }

@@ -14,6 +14,7 @@ const {
   pomodoroCount,
   baseUrl,
   currentStage,
+  switchToPomodoro,
   isPlayerReady
 } = useStopwatch()
 </script>
@@ -27,6 +28,7 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'pomodoro' }"
+          @click="switchToPomodoro"
         >
           Pomodoro
         </button>
