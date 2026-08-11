@@ -13,6 +13,7 @@ const {
   skip,
   pomodoroCount,
   baseUrl,
+  currentStage,
   isPlayerReady
 } = useStopwatch()
 </script>
@@ -22,9 +23,27 @@ const {
   <main id="center">
     <div class="hero">
       <div class="intervals">
-        <button type="button" class="intervals__button">Pomodoro</button>
-        <button type="button" class="intervals__button">Short Break</button>
-        <button type="button" class="intervals__button">Long Break</button>
+        <button
+          type="button"
+          class="intervals__button"
+          :class="{ 'intervals__button--featured': currentStage === 'pomodoro' }"
+        >
+          Pomodoro
+        </button>
+        <button
+          type="button"
+          class="intervals__button"
+          :class="{ 'intervals__button--featured': currentStage === 'shortBreak' }"
+        >
+          Short Break
+        </button>
+        <button
+          type="button"
+          class="intervals__button"
+          :class="{ 'intervals__button--featured': currentStage === 'longBreak' }"
+        >
+          Long Break
+        </button>
       </div>
       <div class="display">
         {{ formattedTime }}

@@ -20,6 +20,7 @@ export function useStopwatch() {
     'pomodoro',
     'longBreak'
   ]
+  const currentStage = computed(() => sequence[sequenceIndex.value])
   const sequenceIndex = ref(0)
   const isRunning = ref(false)
   const isPlayerReady = ref(false)
@@ -106,6 +107,7 @@ export function useStopwatch() {
     restore,
     skip,
     baseUrl,
+    currentStage,
     pomodoroCount
   }
 

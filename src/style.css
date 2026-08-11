@@ -126,6 +126,12 @@ code {
   margin: 0 0 8px;
 }
 
+.intervals__button--featured {
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 4px;
+}
+
 .display {
   font-family: var(--mono);
   display: inline-flex;
