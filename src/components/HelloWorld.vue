@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import viteLogo from '../assets/vite.svg'
-import vueLogo from '../assets/vue.svg'
-
 import { useStopwatch } from '../composables/useStopwatch'
 
 const {
@@ -51,7 +48,7 @@ const {
         {{ formattedTime }}
       </div>
       <div class="controls">
-        <button type="button" @click="restore" class="controls__button" :hidden="!isRunning">
+        <button type="button" @click="restore" class="controls__icon-button" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${baseUrl}icons.svg#mdi-restore`"></use>
           </svg>
@@ -60,7 +57,7 @@ const {
         <button
           type="button"
           @click="start"
-          class="controls__button--featured"
+          class="controls__start-button"
           :disabled="!isPlayerReady"
           :hidden="isRunning"
         >
@@ -69,13 +66,13 @@ const {
         <button
           type="button"
           @click="pause"
-          class="controls__button--featured"
+          class="controls__start-button"
           :disabled="!isRunning"
           :hidden="!isRunning"
         >
           PAUSE
         </button>
-        <button type="button" @click="skip" class="controls__button" :hidden="!isRunning">
+        <button type="button" @click="skip" class="controls__icon-button" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${baseUrl}icons.svg#mdi-skip-next`"></use>
           </svg>
@@ -102,14 +99,21 @@ const {
       <p>Your pomodoro timer without ads</p>
       <ul>
         <li>
-          <a href="https://vite.dev/" target="_blank">
-            <img class="logo" :src="viteLogo" alt="" />
-            Explore Vite
+          <a
+            href="https://www.youtube.com/watch?v=X4VbdwhkE10&list=PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L"
+            target="_blank"
+          >
+            <svg class="button-icon" role="presentation" aria-hidden="true">
+              <use :href="`${baseUrl}icons.svg#mdi-youtube`"></use>
+            </svg>
+            Explore playlist
           </a>
         </li>
         <li>
-          <a href="https://vuejs.org/" target="_blank">
-            <img class="button-icon" :src="vueLogo" alt="" />
+          <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">
+            <svg class="button-icon" role="presentation" aria-hidden="true">
+              <use :href="`${baseUrl}icons.svg#mdi-wikipedia`"></use>
+            </svg>
             Learn more
           </a>
         </li>
@@ -123,7 +127,7 @@ const {
       <p>Join the Solanum Lycopersicum community</p>
       <ul>
         <li>
-          <a href="https://github.com/vitejs/vite" target="_blank">
+          <a href="https://github.com/edmundoCA/SolanumLycopersicum" target="_blank">
             <svg class="button-icon" role="presentation" aria-hidden="true">
               <use :href="`${baseUrl}icons.svg#github-icon`"></use>
             </svg>
