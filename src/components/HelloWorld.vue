@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useStopwatch } from '../composables/useStopwatch'
+import { APP_CONFIG } from '../config'
 
 const {
   formattedTime,
@@ -9,7 +10,6 @@ const {
   restore,
   skip,
   pomodoroCount,
-  baseUrl,
   currentStage,
   switchToPomodoro,
   switchToLongBreak,
@@ -54,7 +54,7 @@ const {
       <div class="controls">
         <button type="button" @click="restore" class="controls__icon-button" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
-            <use :href="`${baseUrl}icons.svg#mdi-restore`"></use>
+            <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-restore`"></use>
           </svg>
           <span class="visually-hidden">Restore</span>
         </button>
@@ -78,7 +78,7 @@ const {
         </button>
         <button type="button" @click="skip" class="controls__icon-button" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
-            <use :href="`${baseUrl}icons.svg#mdi-skip-next`"></use>
+            <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-skip-next`"></use>
           </svg>
           <span class="visually-hidden">Skip</span>
         </button>
@@ -97,7 +97,7 @@ const {
   <section id="next-steps">
     <div id="docs">
       <svg class="icon" role="presentation" aria-hidden="true">
-        <use :href="`${baseUrl}icons.svg#documentation-icon`"></use>
+        <use :href="`${APP_CONFIG.baseUrl}icons.svg#documentation-icon`"></use>
       </svg>
       <h2>Solanum Lycopersicum</h2>
       <p>Your pomodoro timer without ads</p>
@@ -108,7 +108,7 @@ const {
             target="_blank"
           >
             <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use :href="`${baseUrl}icons.svg#mdi-youtube`"></use>
+              <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-youtube`"></use>
             </svg>
             Explore playlist
           </a>
@@ -116,7 +116,7 @@ const {
         <li>
           <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">
             <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use :href="`${baseUrl}icons.svg#mdi-wikipedia`"></use>
+              <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-wikipedia`"></use>
             </svg>
             Learn more
           </a>
@@ -125,7 +125,7 @@ const {
     </div>
     <div id="social">
       <svg class="icon" role="presentation" aria-hidden="true">
-        <use :href="`${baseUrl}icons.svg#social-icon`"></use>
+        <use :href="`${APP_CONFIG.baseUrl}icons.svg#social-icon`"></use>
       </svg>
       <h2>Connect with us</h2>
       <p>Join the Solanum Lycopersicum community</p>
@@ -133,7 +133,7 @@ const {
         <li>
           <a href="https://github.com/edmundoCA/SolanumLycopersicum" target="_blank">
             <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use :href="`${baseUrl}icons.svg#github-icon`"></use>
+              <use :href="`${APP_CONFIG.baseUrl}icons.svg#github-icon`"></use>
             </svg>
             GitHub
           </a>

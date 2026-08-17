@@ -31,8 +31,6 @@ export function useStopwatch() {
     return `${pad(minute)}:${pad(second)}`
   })
 
-  const baseUrl = import.meta.env.BASE_URL
-
   let player: YtPlayer | null = null
   let shortBreakCount = 0
   let timerInterval: ReturnType<typeof setInterval> | null = null
@@ -191,7 +189,6 @@ export function useStopwatch() {
     pause,
     restore,
     skip,
-    baseUrl,
     currentStage,
     switchToPomodoro,
     switchToLongBreak,
