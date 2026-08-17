@@ -12,6 +12,8 @@ const {
   baseUrl,
   currentStage,
   switchToPomodoro,
+  switchToLongBreak,
+  switchToShortBreak,
   isPlayerReady
 } = useStopwatch()
 </script>
@@ -33,6 +35,7 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'shortBreak' }"
+          @click="switchToShortBreak"
         >
           Short Break
         </button>
@@ -40,6 +43,7 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'longBreak' }"
+          @click="switchToLongBreak"
         >
           Long Break
         </button>
