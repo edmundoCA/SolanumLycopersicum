@@ -1,6 +1,7 @@
 interface YtPlayer {
   playVideo: () => void
   pauseVideo: () => void
+  destroy: () => void
 }
 interface YtPlayerEvent {
   target: YtPlayer

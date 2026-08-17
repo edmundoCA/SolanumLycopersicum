@@ -40,6 +40,7 @@ export function useStopwatch() {
 
   onUnmounted(() => {
     if (timerInterval) clearInterval(timerInterval)
+    if (player) player.destroy()
   })
 
   onMounted(() => {
