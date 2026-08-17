@@ -23,12 +23,12 @@ export function useStopwatch() {
   const pomodoroCount = ref(1)
   const elapsedTime = ref(0)
   const formattedTime = computed(() => {
-    const date = new Date(stagesTimes[currentStage.value] - elapsedTime.value)
+    const remainingTime = stagesTimes[currentStage.value] - elapsedTime.value
 
-    const minutes = date.getUTCMinutes()
-    const seconds = date.getUTCSeconds()
+    const minute = Math.floor(remainingTime / 60000)
+    const second = Math.floor((remainingTime % 60000) / 1000)
 
-    return `${pad(minutes)}:${pad(seconds)}`
+    return `${pad(minute)}:${pad(second)}`
   })
 
   const baseUrl = import.meta.env.BASE_URL
@@ -163,7 +163,7 @@ export function useStopwatch() {
       if (elapsedTime.value <= stagesTimes[currentStage.value]) return
 
       skip()
-    }, 10)
+    }, 200)
   }
 
   function start() {
