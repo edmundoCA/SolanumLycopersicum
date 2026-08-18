@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePomodoro } from '../composables/usePomodoro'
 import { APP_CONFIG } from '../config'
+import { useBrowserNotification } from '../composables/useBrowserNotification'
 
 const {
   formattedTime,
@@ -16,9 +17,24 @@ const {
   switchToShortBreak,
   isPlayerReady
 } = usePomodoro()
+
+const { toggleNotification, browserNotificationPermission, allowedNotification } =
+  useBrowserNotification()
 </script>
 
 <template>
+  <button
+    type="button"
+    @click="toggleNotification"
+    :hidden="browserNotificationPermission === 'unsupported'"
+  >
+    <svg class="controls__icon" role="presentation" aria-hidden="true">
+      <use
+        :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-skip-next` : `mdi-restore`}`"
+      ></use>
+    </svg>
+    <span>Toggle Notification</span>
+  </button>
   <main id="center">
     <div class="hero">
       <div class="intervals">
