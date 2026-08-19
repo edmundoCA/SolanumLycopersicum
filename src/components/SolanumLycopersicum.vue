@@ -30,7 +30,7 @@ const { toggleNotification, browserNotificationPermission, allowedNotification }
   >
     <svg class="controls__icon" role="presentation" aria-hidden="true">
       <use
-        :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-skip-next` : `mdi-restore`}`"
+        :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
       ></use>
     </svg>
     <span>Toggle Notification</span>
