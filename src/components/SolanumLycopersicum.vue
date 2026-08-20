@@ -23,18 +23,21 @@ const { toggleNotification, browserNotificationPermission, allowedNotification }
 </script>
 
 <template>
-  <button
-    type="button"
-    @click="toggleNotification"
-    :hidden="browserNotificationPermission === 'unsupported'"
-  >
-    <svg class="controls__icon" role="presentation" aria-hidden="true">
-      <use
-        :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
-      ></use>
-    </svg>
-    <span>Toggle Notification</span>
-  </button>
+  <header>
+    <button
+      type="button"
+      @click="toggleNotification"
+      :hidden="browserNotificationPermission === 'unsupported'"
+      class="button--only-icon"
+    >
+      <svg class="header__icon" role="presentation" aria-hidden="true">
+        <use
+          :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
+        ></use>
+      </svg>
+      <span class="visually-hidden">Toggle Notification</span>
+    </button>
+  </header>
   <main id="center">
     <div class="hero">
       <div class="intervals">
@@ -70,7 +73,7 @@ const { toggleNotification, browserNotificationPermission, allowedNotification }
         {{ formattedTime }}
       </time>
       <div class="controls">
-        <button type="button" @click="restore" class="controls__icon-button" :hidden="!isRunning">
+        <button type="button" @click="restore" class="button--only-icon" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-restore`"></use>
           </svg>
@@ -94,7 +97,7 @@ const { toggleNotification, browserNotificationPermission, allowedNotification }
         >
           PAUSE
         </button>
-        <button type="button" @click="skip" class="controls__icon-button" :hidden="!isRunning">
+        <button type="button" @click="skip" class="button--only-icon" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-skip-next`"></use>
           </svg>

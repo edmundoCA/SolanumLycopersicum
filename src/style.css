@@ -91,6 +91,17 @@ button {
   cursor: pointer;
 }
 
+header {
+  display: flex;
+  justify-content: end;
+  padding: var(--pd);
+}
+
+.header__icon {
+  height: 24px;
+  width: 24px;
+}
+
 code,
 .counter {
   font-family: var(--mono);
@@ -159,7 +170,7 @@ code {
   align-items: center;
 }
 
-.controls__icon-button {
+.button--only-icon {
   background: transparent;
   border: none;
   padding: 0;
