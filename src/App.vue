@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import SolanumLycopersicum from './components/SolanumLycopersicum.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <SolanumLycopersicum />
 </template>

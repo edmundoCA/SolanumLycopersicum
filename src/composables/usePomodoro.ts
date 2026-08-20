@@ -16,7 +16,7 @@ function pad(num: number, padding = 2) {
   return num.toString().padStart(padding, '0')
 }
 
-export function useStopwatch() {
+export function usePomodoro() {
   const currentStage = ref<Stage>('pomodoro')
   const isRunning = ref(false)
   const isPlayerReady = ref(false)

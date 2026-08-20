@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStopwatch } from '../composables/useStopwatch'
+import { usePomodoro } from '../composables/usePomodoro'
 import { APP_CONFIG } from '../config'
 
 const {
@@ -15,7 +15,7 @@ const {
   switchToLongBreak,
   switchToShortBreak,
   isPlayerReady
-} = useStopwatch()
+} = usePomodoro()
 </script>
 
 <template>
