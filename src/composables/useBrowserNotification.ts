@@ -28,7 +28,17 @@ export function useBrowserNotification() {
   }
 
   async function requestAndEnableNotification() {
+    const wasDefault = browserNotificationPermission.value === 'default'
+
     await requestPermission()
+
+    const wasPermissionSilentlySurpressed =
+      wasDefault && browserNotificationPermission.value === 'default'
+
+    if (wasPermissionSilentlySurpressed) {
+      browserNotificationPermission.value = 'denied'
+      return
+    }
 
     if (browserNotificationPermission.value === 'granted') allowedNotification.value = true
   }
