@@ -27,6 +27,7 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'pomodoro' }"
+          :aria-pressed="currentStage === 'pomodoro'"
           @click="switchToPomodoro"
         >
           Pomodoro
@@ -35,6 +36,7 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'shortBreak' }"
+          :aria-pressed="currentStage === 'shortBreak'"
           @click="switchToShortBreak"
         >
           Short Break
@@ -43,14 +45,15 @@ const {
           type="button"
           class="intervals__button"
           :class="{ 'intervals__button--featured': currentStage === 'longBreak' }"
+          :aria-pressed="currentStage === 'longBreak'"
           @click="switchToLongBreak"
         >
           Long Break
         </button>
       </div>
-      <div class="display">
+      <time class="display" role="timer">
         {{ formattedTime }}
-      </div>
+      </time>
       <div class="controls">
         <button type="button" @click="restore" class="controls__icon-button" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
