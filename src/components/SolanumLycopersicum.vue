@@ -107,6 +107,7 @@ const {
       <ul>
         <li>
           <a
+            rel="noopener noreferrer"
             href="https://www.youtube.com/watch?v=X4VbdwhkE10&list=PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L"
             target="_blank"
           >
@@ -117,7 +118,11 @@ const {
           </a>
         </li>
         <li>
-          <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">
+          <a
+            rel="noopener noreferrer"
+            href="https://en.wikipedia.org/wiki/Pomodoro_Technique"
+            target="_blank"
+          >
             <svg class="button-icon" role="presentation" aria-hidden="true">
               <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-wikipedia`"></use>
             </svg>
@@ -134,7 +139,11 @@ const {
       <p>Join the Solanum Lycopersicum community</p>
       <ul>
         <li>
-          <a href="https://github.com/edmundoCA/SolanumLycopersicum" target="_blank">
+          <a
+            rel="noopener noreferrer"
+            href="https://github.com/edmundoCA/SolanumLycopersicum"
+            target="_blank"
+          >
             <svg class="button-icon" role="presentation" aria-hidden="true">
               <use :href="`${APP_CONFIG.baseUrl}icons.svg#github-icon`"></use>
             </svg>
