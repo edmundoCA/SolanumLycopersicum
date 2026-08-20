@@ -2,11 +2,10 @@ import { ref, onMounted } from 'vue'
 import type { Stage } from './usePomodoro'
 
 export type BrowserNotificationPermission = NotificationPermission | 'unsupported'
+const browserNotificationPermission = ref<BrowserNotificationPermission>('default')
+const allowedNotification = ref<boolean>(false)
 
 export function useBrowserNotification() {
-  const browserNotificationPermission = ref<BrowserNotificationPermission>('default')
-  const allowedNotification = ref<boolean>(false)
-
   onMounted(() => {
     if ('Notification' in window) {
       browserNotificationPermission.value = Notification.permission
@@ -25,13 +24,13 @@ export function useBrowserNotification() {
   }
 
   async function toggleNotification() {
-    if (allowedNotification.value) {
-      allowedNotification.value = false
-      return
-    }
+    allowedNotification.value = !allowedNotification.value
+  }
 
+  async function requestAndEnableNotification() {
     await requestPermission()
-    allowedNotification.value = browserNotificationPermission.value === 'granted'
+
+    if (browserNotificationPermission.value === 'granted') allowedNotification.value = true
   }
 
   function showNotification(stage: Stage) {
@@ -46,6 +45,7 @@ export function useBrowserNotification() {
     browserNotificationPermission,
     allowedNotification,
     toggleNotification,
-    showNotification
+    showNotification,
+    requestAndEnableNotification
   }
 }

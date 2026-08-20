@@ -18,25 +18,49 @@ const {
   isPlayerReady
 } = usePomodoro()
 
-const { toggleNotification, browserNotificationPermission, allowedNotification } =
-  useBrowserNotification()
+const {
+  toggleNotification,
+  requestAndEnableNotification,
+  browserNotificationPermission,
+  allowedNotification
+} = useBrowserNotification()
 </script>
 
 <template>
   <header>
-    <button
-      type="button"
-      @click="toggleNotification"
-      :hidden="browserNotificationPermission === 'unsupported'"
-      class="button--only-icon"
-    >
-      <svg class="header__icon" role="presentation" aria-hidden="true">
-        <use
-          :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
-        ></use>
-      </svg>
-      <span class="visually-hidden">Toggle Notification</span>
-    </button>
+    <div v-if="browserNotificationPermission !== 'unsupported'">
+      <button
+        type="button"
+        @click="toggleNotification"
+        :hidden="browserNotificationPermission !== 'granted'"
+        class="button--only-icon"
+      >
+        <svg class="header__icon" role="presentation" aria-hidden="true">
+          <use
+            :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
+          ></use>
+        </svg>
+        <span class="visually-hidden">Toggle Notifications</span>
+      </button>
+      <button
+        type="button"
+        @click="requestAndEnableNotification"
+        v-if="browserNotificationPermission !== 'granted'"
+        class="button--only-icon header__permission-button"
+        :class="{
+          'header__permission-button--disabled': browserNotificationPermission === 'denied'
+        }"
+        :aria-disabled="browserNotificationPermission === 'denied'"
+      >
+        <small v-if="browserNotificationPermission === 'denied'" class="header__notification-info"
+          >Notifications are disabled. Allow them in your browser settings.</small
+        >
+        <span v-else class="visually-hidden">Allow notifications</span>
+        <svg class="header__icon" role="presentation" aria-hidden="true">
+          <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-bell-cancel-outline`"></use>
+        </svg>
+      </button>
+    </div>
   </header>
   <main id="center">
     <div class="hero">

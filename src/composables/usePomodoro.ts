@@ -24,7 +24,8 @@ export function usePomodoro() {
   const pomodoroCount = ref(1)
   const elapsedTime = ref(0)
 
-  const { showNotification } = useBrowserNotification()
+  const { showNotification, browserNotificationPermission, allowedNotification } =
+    useBrowserNotification()
 
   const formattedTime = computed(() => {
     const remainingTime = stagesTimes[currentStage.value] - elapsedTime.value
@@ -185,6 +186,8 @@ export function usePomodoro() {
   }
 
   function notifyStageCompletion() {
+    console.log('showNotification', browserNotificationPermission.value, allowedNotification.value)
+    if (browserNotificationPermission.value !== 'granted' || !allowedNotification.value) return
     showNotification(currentStage.value)
   }
 

@@ -97,11 +97,6 @@ header {
   padding: var(--pd);
 }
 
-.header__icon {
-  height: 24px;
-  width: 24px;
-}
-
 code,
 .counter {
   font-family: var(--mono);
@@ -125,6 +120,58 @@ code {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.button--only-icon {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--text-h);
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.header__permission-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.header__permission-button--disabled {
+  cursor: help;
+  opacity: 0.5;
+
+  &:hover {
+    color: var(--text-h);
+  }
+}
+
+.header__icon {
+  height: 24px;
+  width: 24px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.header__notification-info {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    max-width 0.4s ease-in-out,
+    opacity 0.3s ease 0.1s,
+    margin 0.4s ease;
+  margin-right: 0;
+}
+
+.header__permission-button--disabled:hover .header__notification-info,
+.header__permission-button--disabled:focus-visible .header__notification-info {
+  opacity: 1;
+  max-width: 300px;
+  margin-right: 2ch;
 }
 
 .hero {
@@ -168,17 +215,6 @@ code {
   gap: 8px;
   justify-content: center;
   align-items: center;
-}
-
-.button--only-icon {
-  background: transparent;
-  border: none;
-  padding: 0;
-  color: var(--text-h);
-
-  &:hover {
-    color: var(--accent);
-  }
 }
 
 .controls__icon {
