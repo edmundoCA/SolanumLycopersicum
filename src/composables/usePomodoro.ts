@@ -35,40 +35,68 @@ export function usePomodoro() {
   let shortBreakCount = 0
   let timerInterval: ReturnType<typeof setInterval> | null = null
   let startTime = 0
+  let isComponentMounted = false
 
   onUnmounted(() => {
+    isComponentMounted = false
+
+    if (window.onYouTubeIframeAPIReady) window.onYouTubeIframeAPIReady = undefined
     if (timerInterval) clearInterval(timerInterval)
     if (player) player.destroy()
   })
 
   onMounted(() => {
+    isComponentMounted = true
+
+    if (window.YT && window.YT.Player) {
+      initPlayer()
+      return
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      initPlayer()
+    }
+
+    initIframeScript()
+  })
+
+  function initPlayer() {
+    if (!isComponentMounted) return
+
+    if (!document.getElementById('player')) return
+
+    player = new window.YT.Player('player', {
+      height: '390',
+      width: '640',
+      playerVars: {
+        playsinline: 1,
+        listType: 'playlist',
+        list: 'PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L'
+      },
+      events: {
+        onReady: onPlayerReady
+      }
+    })
+  }
+
+  function onPlayerReady() {
+    isPlayerReady.value = true
+  }
+
+  function initIframeScript() {
+    const scriptId = 'youtube-iframe-script'
+
+    if (document.getElementById(scriptId)) return
+
     const tag = document.createElement('script')
+    tag.id = scriptId
     tag.src = 'https://www.youtube.com/iframe_api'
     const firstScriptTag = document.getElementsByTagName('script')[0]
 
     if (firstScriptTag.parentNode) {
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
     }
-
-    window.onYouTubeIframeAPIReady = () => {
-      player = new window.YT.Player('player', {
-        height: '390',
-        width: '640',
-        playerVars: {
-          playsinline: 1,
-          listType: 'playlist',
-          list: 'PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L'
-        },
-        events: {
-          onReady: onPlayerReady
-        }
-      })
-    }
-
-    function onPlayerReady() {
-      isPlayerReady.value = true
-    }
-  })
+  }
 
   function pauseStopwatch() {
     if (!timerInterval) return

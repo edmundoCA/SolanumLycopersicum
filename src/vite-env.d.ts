@@ -11,7 +11,7 @@ interface YtPlayerStateChangeEvent {
 }
 
 interface Window {
-  onYouTubeIframeAPIReady: () => void
+  onYouTubeIframeAPIReady?: () => void
   YT: {
     Player: new (id: string, opciones: Record<string, unknown>) => YtPlayer
     PlayerState: {
