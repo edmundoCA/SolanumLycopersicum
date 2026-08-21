@@ -125,7 +125,7 @@ export function usePomodoro() {
     startTime = 0
   }
 
-  function playvideo() {
+  function playVideo() {
     if (!player) return
 
     player.playVideo()
@@ -158,7 +158,7 @@ export function usePomodoro() {
   function startPomodoro() {
     currentStage.value = 'pomodoro'
     pomodoroCount.value++
-    playvideo()
+    playVideo()
     startStopwatch()
   }
 
@@ -196,7 +196,7 @@ export function usePomodoro() {
     if (isRunning.value) return
 
     if (currentStage.value === 'pomodoro') {
-      playvideo()
+      playVideo()
     }
 
     startStopwatch()
