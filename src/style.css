@@ -255,6 +255,13 @@ code {
   }
 }
 
+#social {
+  @media (max-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
 #next-steps ul {
   list-style: none;
   padding: 0;
@@ -301,6 +308,26 @@ code {
       justify-content: center;
       box-sizing: border-box;
     }
+  }
+}
+
+.yt-wrapper {
+  margin: 24px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--code-bg);
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 768px) {
+  .yt-wrapper {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    margin: 0;
+    z-index: 1;
   }
 }
 

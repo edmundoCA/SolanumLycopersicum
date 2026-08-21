@@ -19,7 +19,6 @@ const {
 </script>
 
 <template>
-  <div id="player" class="visually-hidden"></div>
   <main id="center">
     <div class="hero">
       <div class="intervals">
@@ -152,6 +151,9 @@ const {
         </li>
       </ul>
     </div>
+    <aside class="yt-wrapper">
+      <div id="player"></div>
+    </aside>
   </section>
 
   <div class="ticks"></div>

@@ -66,10 +66,11 @@ export function usePomodoro() {
     if (!document.getElementById('player')) return
 
     player = new window.YT.Player('player', {
-      height: '390',
-      width: '640',
+      height: '200',
+      width: '200',
       playerVars: {
         playsinline: 1,
+        controls: 0,
         listType: 'playlist',
         list: 'PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L'
       },
