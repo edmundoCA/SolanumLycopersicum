@@ -1,13 +1,13 @@
 import { ref, computed, onUnmounted, onMounted } from 'vue'
 import { useBrowserNotification } from './useBrowserNotification'
+import { showNotification } from '../utils/notifications'
+import type { Stage } from '../types'
 
-const stagesTimes = {
+const stagesTimes: Record<Stage, number> = {
   pomodoro: minutesToMilliseconds(25),
   shortBreak: minutesToMilliseconds(5),
   longBreak: minutesToMilliseconds(15)
-} as const
-
-export type Stage = keyof typeof stagesTimes
+}
 
 function minutesToMilliseconds(minutes: number) {
   return minutes * 60 * 1000
@@ -24,8 +24,7 @@ export function usePomodoro() {
   const pomodoroCount = ref(1)
   const elapsedTime = ref(0)
 
-  const { showNotification, browserNotificationPermission, allowedNotification } =
-    useBrowserNotification()
+  const { browserNotificationPermission, allowedNotification } = useBrowserNotification()
 
   const formattedTime = computed(() => {
     const remainingTime = stagesTimes[currentStage.value] - elapsedTime.value
