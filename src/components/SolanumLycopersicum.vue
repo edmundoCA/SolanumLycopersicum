@@ -2,6 +2,15 @@
 import { usePomodoro } from '../composables/usePomodoro'
 import { APP_CONFIG } from '../config'
 import { useBrowserNotification } from '../composables/useBrowserNotification'
+import { humanizeCamelCase } from '../utils/formatters'
+
+const {
+  toggleNotification,
+  requestAndEnableNotification,
+  notifyIfAllowed,
+  browserNotificationPermission,
+  allowedNotification
+} = useBrowserNotification()
 
 const {
   formattedTime,
@@ -16,14 +25,14 @@ const {
   switchToLongBreak,
   switchToShortBreak,
   isPlayerReady
-} = usePomodoro()
-
-const {
-  toggleNotification,
-  requestAndEnableNotification,
-  browserNotificationPermission,
-  allowedNotification
-} = useBrowserNotification()
+} = usePomodoro({
+  onFinish: () => {
+    notifyIfAllowed(
+      `${humanizeCamelCase(currentStage.value)} Complete`,
+      `HEY! Your ${humanizeCamelCase(currentStage.value)} is over!`
+    )
+  }
+})
 </script>
 
 <template>

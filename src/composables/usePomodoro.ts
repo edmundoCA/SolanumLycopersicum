@@ -1,6 +1,4 @@
 import { ref, computed, onUnmounted, onMounted } from 'vue'
-import { useBrowserNotification } from './useBrowserNotification'
-import { showNotification } from '../utils/notifications'
 import type { Stage } from '../types'
 
 const stagesTimes: Record<Stage, number> = {
@@ -13,18 +11,20 @@ function minutesToMilliseconds(minutes: number) {
   return minutes * 60 * 1000
 }
 
+interface PomodoroOptions {
+  onFinish: () => void
+}
+
 function pad(num: number, padding = 2) {
   return num.toString().padStart(padding, '0')
 }
 
-export function usePomodoro() {
+export function usePomodoro({ onFinish }: PomodoroOptions) {
   const currentStage = ref<Stage>('pomodoro')
   const isRunning = ref(false)
   const isPlayerReady = ref(false)
   const pomodoroCount = ref(1)
   const elapsedTime = ref(0)
-
-  const { browserNotificationPermission, allowedNotification } = useBrowserNotification()
 
   const formattedTime = computed(() => {
     const remainingTime = stagesTimes[currentStage.value] - elapsedTime.value
@@ -184,12 +184,6 @@ export function usePomodoro() {
     startStopwatch()
   }
 
-  function notifyStageCompletion() {
-    console.log('showNotification', browserNotificationPermission.value, allowedNotification.value)
-    if (browserNotificationPermission.value !== 'granted' || !allowedNotification.value) return
-    showNotification(currentStage.value)
-  }
-
   function startStopwatch() {
     startTime = Date.now() - elapsedTime.value
     isRunning.value = true
@@ -199,7 +193,7 @@ export function usePomodoro() {
 
       if (elapsedTime.value <= stagesTimes[currentStage.value]) return
 
-      notifyStageCompletion()
+      onFinish()
       skip()
     }, 200)
   }

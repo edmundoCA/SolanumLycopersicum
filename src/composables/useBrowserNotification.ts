@@ -1,10 +1,12 @@
 import { ref, onMounted } from 'vue'
+import { notify } from '../utils/browser'
 
 export type BrowserNotificationPermission = NotificationPermission | 'unsupported'
-const browserNotificationPermission = ref<BrowserNotificationPermission>('default')
-const allowedNotification = ref<boolean>(false)
 
 export function useBrowserNotification() {
+  const browserNotificationPermission = ref<BrowserNotificationPermission>('default')
+  const allowedNotification = ref<boolean>(false)
+
   onMounted(() => {
     if ('Notification' in window) {
       browserNotificationPermission.value = Notification.permission
@@ -42,10 +44,16 @@ export function useBrowserNotification() {
     if (browserNotificationPermission.value === 'granted') allowedNotification.value = true
   }
 
+  function notifyIfAllowed(title: string, text: string) {
+    if (browserNotificationPermission.value !== 'granted' || !allowedNotification.value) return
+    notify(title, text)
+  }
+
   return {
     browserNotificationPermission,
     allowedNotification,
     toggleNotification,
+    notifyIfAllowed,
     requestAndEnableNotification
   }
 }
