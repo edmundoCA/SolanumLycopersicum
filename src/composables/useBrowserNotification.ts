@@ -24,7 +24,7 @@ export function useBrowserNotification() {
     browserNotificationPermission.value = await Notification.requestPermission()
   }
 
-  async function toggleNotification() {
+  function toggleNotification() {
     allowedNotification.value = !allowedNotification.value
   }
 
