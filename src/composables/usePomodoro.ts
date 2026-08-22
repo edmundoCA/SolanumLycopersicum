@@ -1,27 +1,31 @@
 import { ref, computed, onUnmounted, onMounted } from 'vue'
+import type { Stage } from '../types'
 
-const stagesTimes = {
+const stagesTimes: Record<Stage, number> = {
   pomodoro: minutesToMilliseconds(25),
   shortBreak: minutesToMilliseconds(5),
   longBreak: minutesToMilliseconds(15)
-} as const
-
-type Stage = keyof typeof stagesTimes
+}
 
 function minutesToMilliseconds(minutes: number) {
   return minutes * 60 * 1000
+}
+
+interface PomodoroOptions {
+  onFinish: () => void
 }
 
 function pad(num: number, padding = 2) {
   return num.toString().padStart(padding, '0')
 }
 
-export function usePomodoro() {
+export function usePomodoro({ onFinish }: PomodoroOptions) {
   const currentStage = ref<Stage>('pomodoro')
   const isRunning = ref(false)
   const isPlayerReady = ref(false)
   const pomodoroCount = ref(1)
   const elapsedTime = ref(0)
+
   const formattedTime = computed(() => {
     const remainingTime = stagesTimes[currentStage.value] - elapsedTime.value
 
@@ -189,6 +193,7 @@ export function usePomodoro() {
 
       if (elapsedTime.value <= stagesTimes[currentStage.value]) return
 
+      onFinish()
       skip()
     }, 200)
   }

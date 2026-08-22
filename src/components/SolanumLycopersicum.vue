@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { usePomodoro } from '../composables/usePomodoro'
 import { APP_CONFIG } from '../config'
+import { useBrowserNotification } from '../composables/useBrowserNotification'
+import { humanizeCamelCase } from '../utils/formatters'
+
+const {
+  toggleNotification,
+  requestAndEnableNotification,
+  notifyIfAllowed,
+  browserNotificationPermission,
+  allowedNotification
+} = useBrowserNotification()
 
 const {
   formattedTime,
@@ -15,10 +25,53 @@ const {
   switchToLongBreak,
   switchToShortBreak,
   isPlayerReady
-} = usePomodoro()
+} = usePomodoro({
+  onFinish: () => {
+    notifyIfAllowed(
+      `${humanizeCamelCase(currentStage.value)} Complete`,
+      `HEY! Your ${humanizeCamelCase(currentStage.value)} is over!`
+    )
+  }
+})
 </script>
 
 <template>
+  <header>
+    <div v-if="browserNotificationPermission !== 'unsupported'">
+      <button
+        v-if="browserNotificationPermission === 'default'"
+        type="button"
+        @click="requestAndEnableNotification"
+        class="button--only-icon"
+      >
+        <svg class="header__icon" role="presentation" aria-hidden="true">
+          <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-bell-cog-outline`"></use>
+        </svg>
+        <span class="visually-hidden">Allow notifications</span>
+      </button>
+      <button
+        v-else-if="browserNotificationPermission === 'denied'"
+        type="button"
+        :aria-disabled="true"
+        class="button--only-icon header__permission-button header__permission-button--disabled"
+      >
+        <small class="header__notification-info"
+          >Notifications are disabled. Allow them in your browser settings.</small
+        >
+        <svg class="header__icon" role="presentation" aria-hidden="true">
+          <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-bell-cancel-outline`"></use>
+        </svg>
+      </button>
+      <button v-else type="button" @click="toggleNotification" class="button--only-icon">
+        <svg class="header__icon" role="presentation" aria-hidden="true">
+          <use
+            :href="`${APP_CONFIG.baseUrl}icons.svg#${allowedNotification ? `mdi-bell` : `mdi-bell-off-outline`}`"
+          ></use>
+        </svg>
+        <span class="visually-hidden">Toggle Notifications</span>
+      </button>
+    </div>
+  </header>
   <main id="center">
     <div class="hero">
       <div class="intervals">
@@ -54,7 +107,7 @@ const {
         {{ formattedTime }}
       </time>
       <div class="controls">
-        <button type="button" @click="restore" class="controls__icon-button" :hidden="!isRunning">
+        <button type="button" @click="restore" class="button--only-icon" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-restore`"></use>
           </svg>
@@ -78,7 +131,7 @@ const {
         >
           PAUSE
         </button>
-        <button type="button" @click="skip" class="controls__icon-button" :hidden="!isRunning">
+        <button type="button" @click="skip" class="button--only-icon" :hidden="!isRunning">
           <svg class="controls__icon" role="presentation" aria-hidden="true">
             <use :href="`${APP_CONFIG.baseUrl}icons.svg#mdi-skip-next`"></use>
           </svg>
